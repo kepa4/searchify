@@ -1,26 +1,36 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+require('dotenv').config();
+
 var SpotifyWebApi = require('spotify-web-api-node');
 var querystring = require('querystring');
 
 var client_id = process.env.CLIENT_ID;
 var client_secret = process.env.CLIENT_SECRET;
-var redirect_uri = process.env.REDIRECT_URI;
-var stateKey = 'spotify_auth_state';
+var axios = require('axios');
+
+const REDIRECT_URI =
+  process.env.REDIRECT_URI || 'http://localhost:3000/callback';
+const STATE_KEY = 'spotify_auth_state';
+
+const scopes = ['user-read-private', 'user-read-email'];
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: client_id,
+  clientSecret: client_secret,
+  redirectUri: REDIRECT_URI
+});
 
 module.exports.spotifyLogin = function(res) {
-  var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    redirectUri: redirect_uri
+  const state = generateRandomString(16);
+  res.cookie(STATE_KEY, state);
+  res.send(spotifyApi.createAuthorizeURL(scopes, state));
+};
+
+module.exports.spotifyCallback = function(req, res) {
+  spotifyApi.authorizationCodeGrant(req.query.code).then(function(data) {
+    spotifyApi.setAccessToken(data.body.access_token);
+    spotifyApi.setRefreshToken(data.body.refresh_token);
+    res.send(data);
   });
-  var state = generateRandomString(16);
-  res.cookie(stateKey, state);
-  var scopes = ['user-read-email', ' user-read-private'];
-  var authorizeURL = spotifyApi.createAuthorizeURL(scopes, null, true);
-  console.log(authorizeURL);
-  res.redirect(authorizeURL);
 };
 
 function generateRandomString(length) {

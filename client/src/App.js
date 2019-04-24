@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
 import AppBar from './components/AppBar';
-import { Router } from 'react-router';
 import { Button } from '@material-ui/core';
 import './App.css';
 import axios from 'axios';
 
 class App extends Component {
-  getUser() {
-    axios.get('/login').then(function(response) {
-      console.log(response);
+  state = {
+    loginUrl: '',
+    userToken: ''
+  };
+  getAuth() {
+    axios.get('/login').then(res => {
+      this.setState({ loginUrl: res.data });
     });
   }
 
+  componentDidMount() {
+    this.getAuth();
+    axios.get(window.location).then(res => {
+      this.setState({ userToken: res.data.body.access_token });
+    });
+  }
   render() {
     return (
       <div className="App">
         <AppBar />
-        <Button onClick={() => this.getUser()}> Login </Button>
+        <Button href={this.state.loginUrl}> Log Into Spotify</Button>
       </div>
     );
   }

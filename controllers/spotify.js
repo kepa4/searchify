@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var SpotifyWebApi = require('spotify-web-api-node');
-var querystring = require('querystring');
+var qs = require('querystring');
 
 var client_id = process.env.CLIENT_ID;
 var client_secret = process.env.CLIENT_SECRET;
@@ -19,27 +19,52 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri: REDIRECT_URI
 });
 
-module.exports.spotifyLogin = function(res) {
-  const state = generateRandomString(16);
-  res.cookie(STATE_KEY, state);
-  res.send(spotifyApi.createAuthorizeURL(scopes, state));
+const redirectUriParameters = {
+  client_id: process.env.CLIENT_ID,
+  response_type: 'token',
+  scope: scopes.join(' '),
+  redirect_uri: encodeURI(REDIRECT_URI),
+  show_dialog: true
 };
 
-module.exports.spotifyCallback = function(req, res) {
-  spotifyApi.authorizationCodeGrant(req.query.code).then(function(data) {
-    spotifyApi.setAccessToken(data.body.access_token);
-    spotifyApi.setRefreshToken(data.body.refresh_token);
-    res.send(data);
+const reAuthenticateOnFailure = action => {
+  action(() => {
+    authenticate(action);
   });
 };
 
-function generateRandomString(length) {
-  var text = '';
-  var possible =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function authenticate(callback) {
+  spotifyApi.clientCredentialsGrant().then(
+    function(data) {
+      console.log('The access token expires in ' + data.body['expires_in']);
+      console.log('The access token is ' + data.body['access_token']);
 
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
+      callback instanceof Function && callback();
+      spotifyApi.setAccessToken(data.body['access_token']);
+    },
+    function(err) {
+      console.log(
+        'Something went wrong when retrieving an access token',
+        err.message
+      );
+    }
+  );
 }
+authenticate();
+
+module.exports.spotifyLogin = function(res) {
+  const redirectUri = `https://accounts.spotify.com/authorize?${qs.stringify(
+    redirectUriParameters
+  )}`;
+  console.log(redirectUri);
+  res.send(redirectUri);
+};
+
+module.exports.getGenres = function(request, response) {
+  spotifyApi.setAccessToken(request.query.accessToken);
+  reAuthenticateOnFailure(failure => {
+    spotifyApi.getAvailableGenreSeeds().then(function(data) {
+      response.send(data.body);
+    }, failure);
+  });
+};

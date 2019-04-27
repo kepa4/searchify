@@ -17,8 +17,11 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 router.get('/genres', function(req, res) {
-  console.log(req.query.accessToken);
   spotify.getGenres(req, res);
+});
+
+router.get('/songs', function(req, res) {
+  spotify.getSongs(req, res);
 });
 
 module.exports = router;

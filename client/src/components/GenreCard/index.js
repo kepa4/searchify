@@ -20,12 +20,15 @@ const styles = {
 };
 
 class GenreCard extends React.Component {
+  handleClick = () => {
+    window.location = '/search?searchQuery=' + this.props.genre;
+  };
   render() {
     const { classes } = this.props;
     return (
       <Grid item xs={3}>
         <Card className={classes.card}>
-          <CardActionArea>
+          <CardActionArea onClick={this.handleClick}>
             <CardContent>
               <Typography
                 className={classes.title}

@@ -68,3 +68,16 @@ module.exports.getGenres = function(request, response) {
     }, failure);
   });
 };
+
+module.exports.getSongs = function(request, response) {
+  reAuthenticateOnFailure(failure => {
+    spotifyApi
+      .searchTracks(request.query.searchQuery, {
+        limit: 50,
+        offset: 50
+      })
+      .then(data => {
+        response.send(data);
+      }, failure);
+  });
+};

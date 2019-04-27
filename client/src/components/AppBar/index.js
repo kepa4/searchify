@@ -8,8 +8,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
+  IconButton,
   InputBase,
   MenuItem,
   Menu
@@ -91,6 +91,9 @@ class PrimarySearchAppBar extends React.Component {
     mobileMoreAnchorEl: null
   };
 
+  handleClick = () => {
+    window.location = '/home';
+  };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -150,6 +153,7 @@ class PrimarySearchAppBar extends React.Component {
               className={classes.title}
               variant="h6"
               color="inherit"
+              onClick={this.handleClick}
               noWrap>
               Searchify
             </Typography>

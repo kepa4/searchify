@@ -41,7 +41,7 @@ class LoginPage extends Component {
         parseInt(localStorage.getItem(LOCALSTORAGE_ACCESS_TOKEN_EXPIRY_KEY))
       ) > Date.now()
     ) {
-      window.location = '/landingpage';
+      window.location = '/home';
     } else {
       if (window.location.hash) {
         const hash = parseHash(window.location.hash);
@@ -54,7 +54,7 @@ class LoginPage extends Component {
             LOCALSTORAGE_ACCESS_TOKEN_EXPIRY_KEY,
             Date.now() + 990 * parseInt(hash['expires_in'])
           );
-          window.location = '/landingpage';
+          window.location = '/home';
         }
       }
     }

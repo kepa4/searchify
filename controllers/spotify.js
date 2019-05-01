@@ -1,16 +1,12 @@
 require('dotenv').config();
-
-var SpotifyWebApi = require('spotify-web-api-node');
-var qs = require('querystring');
-
-var client_id = process.env.CLIENT_ID;
-var client_secret = process.env.CLIENT_SECRET;
-var axios = require('axios');
-
+const SpotifyWebApi = require('spotify-web-api-node');
+const qs = require('querystring');
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
+const axios = require('axios');
 const REDIRECT_URI =
   process.env.REDIRECT_URI || 'http://localhost:3000/callback';
 const STATE_KEY = 'spotify_auth_state';
-
 const scopes = ['user-read-private', 'user-read-email'];
 
 const spotifyApi = new SpotifyWebApi({
@@ -80,4 +76,8 @@ module.exports.getSongs = function(request, response) {
         response.send(data);
       }, failure);
   });
+};
+
+module.exports.getMe = function(req, res) {
+  spotifyApi.getMe().then(data => res.send(data));
 };

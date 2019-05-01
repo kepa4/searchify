@@ -7,7 +7,8 @@ import SongCard from '../SongCard';
 class SearchResults extends React.Component {
   state = {
     searchQuery: '',
-    results: []
+    results: [],
+    filteredSongs: []
   };
   getSearchResults = search => {
     axios
@@ -17,6 +18,11 @@ class SearchResults extends React.Component {
       .then(response => {
         console.log(response.data.body.tracks.items);
         this.setState({ results: response.data.body.tracks.items });
+        const filteredSongs = this.state.results.filter(
+          song => song.popularity < 50
+        );
+        console.log(filteredSongs);
+        this.setState({ filteredSongs: filteredSongs });
       });
   };
   componentDidMount() {
@@ -28,7 +34,7 @@ class SearchResults extends React.Component {
     return (
       <div>
         <AppBar />
-        {this.state.results.map((song, index) => {
+        {this.state.filteredSongs.map((song, index) => {
           return <SongCard song={song} key={index} />;
         })}
       </div>

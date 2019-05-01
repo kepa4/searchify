@@ -24,4 +24,8 @@ router.get('/songs', function(req, res) {
   spotify.getSongs(req, res);
 });
 
+router.get('/user', function(req, res) {
+  spotify.getMe(req, res);
+});
+
 module.exports = router;

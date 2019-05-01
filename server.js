@@ -8,6 +8,7 @@ const spotifyController = require('./controllers/spotify');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const spotifyRoutes = require('./routes/spotifyRoutes');
+const mongooseRoutes = require('./routes/mongooseRoutes');
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +38,8 @@ app.get('/callback', function(req, res) {
 });
 
 app.use('/spotify', spotifyRoutes);
+
+app.use('/api', mongooseRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));

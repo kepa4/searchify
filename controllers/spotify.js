@@ -110,3 +110,39 @@ module.exports.getMe = function(req, res) {
       console.log(err);
     });
 };
+
+module.exports.saveSong = function(req, res) {
+  console.log(req.body);
+  Song.create(req.body)
+    .then(function(dbSong) {
+      return User.findOneAndUpdate(
+        { userID: req.params.id },
+        { $push: { savedSongs: dbSong } },
+        { new: true }
+      );
+    })
+    .then(function(dbUser) {
+      res.json(dbUser);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+};
+
+module.exports.getSavedSongs = function(req, res) {
+  User.findOne({ userID: req.params.id })
+    .populate('savedSongs')
+    .then(function(dbUser) {
+      res.json(dbUser);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+};
+
+//  artists: [String],
+//  explicit: Boolean,
+//  name: String,
+//  id: String,
+//  previewUrl: String,
+//  img: String

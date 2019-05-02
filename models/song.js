@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var SongSchema = new Schema({
-  artists: [String],
+  artists: [Schema.Types.Mixed],
   explicit: Boolean,
   name: String,
   id: String,
@@ -12,3 +12,5 @@ var SongSchema = new Schema({
 });
 
 var Song = mongoose.model('Song', SongSchema);
+
+module.exports = Song;

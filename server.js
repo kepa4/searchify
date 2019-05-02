@@ -12,6 +12,7 @@ const spotifyRoutes = require('./routes/spotifyRoutes');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', express.static(path.join(__dirname, '../client/build')));
+app.use(express.json());
 app.use(cors());
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');

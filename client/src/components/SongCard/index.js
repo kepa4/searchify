@@ -6,9 +6,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios';
 
 const styles = theme => ({
   card: {
@@ -33,14 +33,39 @@ const styles = theme => ({
   playIcon: {
     height: 38,
     width: 38
+  },
+  addIcon: {
+    height: 38,
+    width: 38
   }
 });
 
 class SongCard extends React.Component {
+  handleAddToPlaylist = song => {
+    const userID = localStorage.getItem('user-id');
+    console.log(userID);
+    console.log(song);
+    axios
+      .post('/spotify/usersongs/' + userID, {
+        artists: song.artists,
+        explicit: song.explicit,
+        name: song.name,
+        id: song.id,
+        img: song.album.images[0].url
+      })
+      .then(res => {
+        console.log(res);
+      });
+  };
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <Card className={classes.card}>
+        <CardMedia
+          className={classes.cover}
+          image={this.props.song.album.images[0].url}
+          title=""
+        />
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
@@ -53,30 +78,16 @@ class SongCard extends React.Component {
             </Typography>
           </CardContent>
           <div className={classes.controls}>
-            <IconButton aria-label="Previous">
-              {theme.direction === 'rtl' ? (
-                <SkipNextIcon />
-              ) : (
-                <SkipPreviousIcon />
-              )}
-            </IconButton>
             <IconButton aria-label="Play/pause">
               <PlayArrowIcon className={classes.playIcon} />
             </IconButton>
-            <IconButton aria-label="Next">
-              {theme.direction === 'rtl' ? (
-                <SkipPreviousIcon />
-              ) : (
-                <SkipNextIcon />
-              )}
+            <IconButton
+              onClick={() => this.handleAddToPlaylist(this.props.song)}
+              aria-label="Add To Playlist">
+              <AddIcon className={classes.addIcon} />
             </IconButton>
           </div>
         </div>
-        <CardMedia
-          className={classes.cover}
-          image={this.props.song.album.images[0].url}
-          title=""
-        />
       </Card>
     );
   }

@@ -8,6 +8,21 @@ const REDIRECT_URI =
   process.env.REDIRECT_URI || 'http://localhost:3000/callback';
 const STATE_KEY = 'spotify_auth_state';
 const scopes = ['user-read-private', 'user-read-email'];
+const mongoose = require('mongoose');
+const MONGODB_URI =
+  process.env.MONGODB_URI || 'mongodb://localhost/mongoSearchify';
+
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+const db = mongoose.connection;
+
+db.once('open', function() {
+  console.log('Mongoose Connection Succesful');
+});
+
+const Song = require('../models/song.js');
+const User = require('../models/user.js');
 
 const spotifyApi = new SpotifyWebApi({
   clientId: client_id,
@@ -52,7 +67,6 @@ module.exports.spotifyLogin = function(res) {
   const redirectUri = `https://accounts.spotify.com/authorize?${qs.stringify(
     redirectUriParameters
   )}`;
-  console.log(redirectUri);
   res.send(redirectUri);
 };
 
@@ -79,5 +93,20 @@ module.exports.getSongs = function(request, response) {
 };
 
 module.exports.getMe = function(req, res) {
-  spotifyApi.getMe().then(data => res.send(data));
+  spotifyApi
+    .getMe()
+    .then(data => {
+      User.find({ userID: data.body.id }, function(err, docs) {
+        if (docs.length) {
+          console.log('User Exists');
+        } else {
+          User.create({ userID: data.body.id });
+          console.log('User Created');
+        }
+      });
+      res.send(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };

@@ -28,4 +28,10 @@ router.get('/user', function(req, res) {
   spotify.getMe(req, res);
 });
 
+router.post('/usersongs', (req, res) => {});
+
+router.get('/savedsongs', (req, res) => {});
+
+router.delete('/usersongs/:id', (req, res) => {});
+
 module.exports = router;

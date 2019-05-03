@@ -37,7 +37,37 @@ class Genres extends React.Component {
       })
       .then(res => {
         console.log(res.data);
-        this.setState({ genres: res.data.genres });
+        this.setState({
+          genres: res.data.genres.filter(
+            function(genre) {
+              return this.indexOf(genre) < 0;
+            },
+            [
+              'bossanova',
+              'brazil',
+              'children',
+              'goth',
+              'holidays',
+              'malay',
+              'metal-misc',
+              'movies',
+              'new-release',
+              'philippines-opm',
+              'pop-film',
+              'post-dubstep',
+              'r-n-b',
+              'rainy-day',
+              'road-trip',
+              'rock-n-roll',
+              'romance',
+              'sad',
+              'soundtracks',
+              'study',
+              'summer',
+              'work-out'
+            ]
+          )
+        });
       })
       .catch(error => {
         console.log(error);

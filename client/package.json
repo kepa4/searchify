@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "query-string": "^6.4.2",
     "react": "^16.6.3",
+    "react-bottom-scroll-listener": "^2.1.2",
     "react-dom": "^16.6.3",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",

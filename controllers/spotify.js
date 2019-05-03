@@ -84,7 +84,7 @@ module.exports.getSongs = function(request, response) {
     spotifyApi
       .searchTracks(request.query.searchQuery, {
         limit: 50,
-        offset: 50
+        offset: 50 + parseInt(request.query.offsetNumber)
       })
       .then(data => {
         response.send(data);

@@ -6,9 +6,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
+import Player from '../SoundPlayer';
 
 const styles = theme => ({
   card: {
@@ -41,6 +41,10 @@ const styles = theme => ({
 });
 
 class SongCard extends React.Component {
+  state = {
+    playing: false
+  };
+
   handleAddToPlaylist = song => {
     const userID = localStorage.getItem('user-id');
     console.log(userID);
@@ -51,12 +55,14 @@ class SongCard extends React.Component {
         explicit: song.explicit,
         name: song.name,
         id: song.id,
-        img: song.album.images[0].url
+        img: song.album.images[0].url,
+        previewUrl: song.preview_url
       })
       .then(res => {
         console.log(res);
       });
   };
+
   render() {
     const { classes } = this.props;
     return (
@@ -78,14 +84,12 @@ class SongCard extends React.Component {
             </Typography>
           </CardContent>
           <div className={classes.controls}>
-            <IconButton aria-label="Play/pause">
-              <PlayArrowIcon className={classes.playIcon} />
-            </IconButton>
             <IconButton
               onClick={() => this.handleAddToPlaylist(this.props.song)}
               aria-label="Add To Playlist">
               <AddIcon className={classes.addIcon} />
             </IconButton>
+            <Player song={this.props.song.preview_url} />
           </div>
         </div>
       </Card>

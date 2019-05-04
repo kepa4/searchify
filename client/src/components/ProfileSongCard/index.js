@@ -6,8 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import CloseIcon from '@material-ui/icons/Close';
+import Player from '../SoundPlayer';
 
 const styles = theme => ({
   card: {
@@ -62,9 +62,7 @@ class ProfileSongCard extends React.Component {
             </Typography>
           </CardContent>
           <div className={classes.controls}>
-            <IconButton aria-label="Play/pause">
-              <PlayArrowIcon className={classes.playIcon} />
-            </IconButton>
+            <Player song={this.props.song.previewUrl} />
             <IconButton aria-label="Remove Song">
               <CloseIcon className={classes.closeIcon} />
             </IconButton>

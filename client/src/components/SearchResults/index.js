@@ -31,22 +31,20 @@ class SearchResults extends React.Component {
         this.setState({
           filteredSongs: this.state.filteredSongs.concat(filteredSongs)
         });
-        console.log(response.data.body.tracks.offset);
         this.setState({
           offset: response.data.body.tracks.offset
         });
-        console.log(this.state.offset);
-        console.log(document.body.clientHeight);
-        console.log(window.screen.availHeight);
-        if (document.body.clientHeight <= window.screen.availHeight) {
+
+        if (
+          filteredSongs.length === 0 ||
+          document.body.clientHeight <= window.screen.availHeight
+        ) {
           this.getSearchResults(this.state.searchQuery);
         }
       });
   };
 
   handleOnBottom = () => {
-    console.log(document.body.clientHeight);
-    console.log('hit bottom');
     this.getSearchResults(this.state.searchQuery);
   };
   componentDidMount() {

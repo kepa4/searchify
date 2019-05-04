@@ -36,6 +36,8 @@ router.get('/usersongs/:id', (req, res) => {
   spotify.getSavedSongs(req, res);
 });
 
-router.delete('/usersongs:id', (req, res) => {});
+router.put('/usersongs/:id', (req, res) => {
+  spotify.deleteSong(req, res);
+});
 
 module.exports = router;

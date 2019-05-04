@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Player from '../SoundPlayer';
+import axios from 'axios';
 
 const styles = theme => ({
   card: {
@@ -40,9 +41,23 @@ const styles = theme => ({
 });
 
 class ProfileSongCard extends React.Component {
+  handleDelete = () => {
+    axios
+      .put('/spotify/usersongs/' + localStorage.getItem('user-id'), {
+        _id: this.props.song._id
+      })
+      .then(res => {
+        console.log(res);
+        if ((res.data = 'success')) {
+          window.location.reload();
+        }
+      });
+  };
+
   render() {
     const { classes } = this.props;
     console.log(this.props);
+
     return (
       <Card className={classes.card}>
         <CardMedia
@@ -63,7 +78,7 @@ class ProfileSongCard extends React.Component {
           </CardContent>
           <div className={classes.controls}>
             <Player song={this.props.song.previewUrl} />
-            <IconButton aria-label="Remove Song">
+            <IconButton onClick={this.handleDelete} aria-label="Remove Song">
               <CloseIcon className={classes.closeIcon} />
             </IconButton>
           </div>

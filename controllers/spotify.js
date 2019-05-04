@@ -140,9 +140,9 @@ module.exports.getSavedSongs = function(req, res) {
     });
 };
 
-//  artists: [String],
-//  explicit: Boolean,
-//  name: String,
-//  id: String,
-//  previewUrl: String,
-//  img: String
+module.exports.deleteSong = function(req, res) {
+  Song.find({ _id: req.body._id })
+    .deleteOne()
+    .exec()
+    .then(res.send('success'));
+};

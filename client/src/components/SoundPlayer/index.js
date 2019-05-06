@@ -1,10 +1,12 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 export default class Player extends React.Component {
   state = {
-    playing: false
+    playing: false,
+    songPlaying: ''
   };
 
   audio = new Audio();
@@ -12,6 +14,7 @@ export default class Player extends React.Component {
   playSong = () => {
     console.log('play');
     this.setState({ playing: true });
+    this.setState({ songPlaying: this.props.song });
     this.audio.src = this.props.song;
     this.audio.volume = 0.1;
     this.audio.play();
@@ -29,7 +32,7 @@ export default class Player extends React.Component {
         <IconButton
           onClick={this.state.playing ? this.pauseSong : this.playSong}
           aria-label="Play/pause">
-          <PlayArrowIcon />
+          {this.state.playing ? <PauseIcon /> : <PlayArrowIcon />}
         </IconButton>
       </div>
     );

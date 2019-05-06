@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import Player from '../SoundPlayer';
+import SnackbarNotification from '../SnackbarNotification';
 
 const styles = theme => ({
   card: {
@@ -29,25 +30,17 @@ const styles = theme => ({
     alignItems: 'center',
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit
-  },
-  playIcon: {
-    height: 38,
-    width: 38
-  },
-  addIcon: {
-    height: 38,
-    width: 38
   }
 });
 
 class SongCard extends React.Component {
   state = {
-    playing: false
+    playing: false,
+    open: false
   };
 
   handleAddToPlaylist = song => {
     const userID = localStorage.getItem('user-id');
-    console.log(userID);
     console.log(song);
     axios
       .post('/spotify/usersongs/' + userID, {
@@ -59,7 +52,9 @@ class SongCard extends React.Component {
         previewUrl: song.preview_url
       })
       .then(res => {
-        console.log(res);
+        if (res.status === 200) {
+          this.setState({ open: true });
+        }
       });
   };
 
@@ -87,11 +82,12 @@ class SongCard extends React.Component {
             <IconButton
               onClick={() => this.handleAddToPlaylist(this.props.song)}
               aria-label="Add To Playlist">
-              <AddIcon className={classes.addIcon} />
+              <AddIcon />
             </IconButton>
             <Player song={this.props.song.preview_url} />
           </div>
         </div>
+        {this.state.open ? <SnackbarNotification open={this.state.open} /> : ''}
       </Card>
     );
   }

@@ -13,7 +13,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div>
-        <AppBar />
+        <AppBar header={'Genres'} />
         <Genres />
       </div>
     );

@@ -25,10 +25,12 @@ class ProfilePage extends React.Component {
   render() {
     return (
       <div>
-        <AppBar />
-        {this.state.songs.map((song, index) => {
-          return <ProfileSongCard key={index} song={song} />;
-        })}
+        <AppBar header={'My Songs'} />
+        <div style={{ marginTop: 65 }}>
+          {this.state.songs.map((song, index) => {
+            return <ProfileSongCard key={index} song={song} />;
+          })}
+        </div>
       </div>
     );
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {
@@ -10,7 +9,6 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  InputBase,
   MenuItem,
   Menu
 } from '@material-ui/core';
@@ -30,6 +28,10 @@ const styles = theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
+    },
+    cursor: 'pointer',
+    '&:hover': {
+      color: 'lightgrey'
     }
   },
   search: {
@@ -82,13 +84,25 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
-  }
+  },
+  header: {
+    position: 'relative',
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: 'auto%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: 'auto'
+    }
+  },
+  headerTitle: {}
 });
 
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    textFieldValue: ''
   };
 
   handleClick = () => {
@@ -151,7 +165,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <Typography
               className={classes.title}
@@ -161,17 +175,14 @@ class PrimarySearchAppBar extends React.Component {
               noWrap>
               Searchify
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
+            <div className={classes.header}>
+              <Typography
+                className={classes.headerTitle}
+                variant="h5"
+                color="inherit"
+                noWrap>
+                {this.props.header}
+              </Typography>
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>

@@ -54,8 +54,8 @@ class SearchResults extends React.Component {
   }
   render() {
     return (
-      <div>
-        <AppBar />
+      <div style={{ marginTop: 65 }}>
+        <AppBar header={'Genre - ' + this.state.searchQuery} />
         {this.state.filteredSongs.map((song, index) => {
           return <SongCard song={song} key={index} />;
         })}

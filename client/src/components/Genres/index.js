@@ -76,7 +76,7 @@ class Genres extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div style={{ marginTop: 70 }}>
         <Grid container spacing={16} className={classes.grid}>
           {this.state.genres.map((genre, index) => {
             return <GenreCard genre={genre} key={genre} />;

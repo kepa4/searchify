@@ -12,7 +12,6 @@ export default class Player extends React.Component {
   audio = new Audio();
 
   playSong = () => {
-    console.log('play');
     this.setState({ playing: true });
     this.setState({ songPlaying: this.props.song });
     this.audio.src = this.props.song;
@@ -21,7 +20,6 @@ export default class Player extends React.Component {
   };
 
   pauseSong = () => {
-    console.log('pause');
     this.setState({ playing: false });
     this.audio.pause();
   };

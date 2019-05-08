@@ -10,6 +10,11 @@ const LOCALSTORAGE_ACCESS_TOKEN_EXPIRY_KEY = 'spotify-token-expires-in';
 const accessToken = localStorage.getItem(LOCALSTORAGE_ACCESS_TOKEN_KEY);
 
 const styles = {
+  container: {
+    marginLeft: '100px',
+    marginRight: '100px',
+    marginTop: '25px'
+  },
   grid: {}
 };
 
@@ -36,7 +41,6 @@ class Genres extends React.Component {
         }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({
           genres: res.data.genres.filter(
             function(genre) {
@@ -76,7 +80,9 @@ class Genres extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{ marginTop: 70 }}>
+      <div
+        className={classes.container}
+        style={{ paddingTop: 70, overFlow: 'none' }}>
         <Grid container spacing={16} className={classes.grid}>
           {this.state.genres.map((genre, index) => {
             return <GenreCard genre={genre} key={genre} />;

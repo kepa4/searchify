@@ -21,13 +21,10 @@ class SearchResults extends React.Component {
         }
       })
       .then(response => {
-        console.log(response.data.body.tracks.items);
-        console.log(response.data.body);
         this.setState({ results: response.data.body.tracks.items });
         const filteredSongs = this.state.results.filter(
           song => song.popularity < 50
         );
-        console.log(filteredSongs);
         this.setState({
           filteredSongs: this.state.filteredSongs.concat(filteredSongs)
         });
@@ -54,7 +51,7 @@ class SearchResults extends React.Component {
   }
   render() {
     return (
-      <div style={{ marginTop: 65 }}>
+      <div style={{ paddingTop: 65 }}>
         <AppBar header={'Genre - ' + this.state.searchQuery} />
         {this.state.filteredSongs.map((song, index) => {
           return <SongCard song={song} key={index} />;

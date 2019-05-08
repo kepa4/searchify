@@ -30,7 +30,6 @@ class SnackbarNotification extends React.Component {
   render() {
     const { classes } = this.props;
 
-    console.log(this.state.open);
     return (
       <div>
         <Snackbar

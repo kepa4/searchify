@@ -97,11 +97,8 @@ module.exports.getMe = function(req, res) {
     .getMe()
     .then(data => {
       User.find({ userID: data.body.id }, function(err, docs) {
-        if (docs.length) {
-          console.log('User Exists');
-        } else {
+        if (!docs.length) {
           User.create({ userID: data.body.id });
-          console.log('User Created');
         }
       });
       res.send(data);

@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import Player from '../SoundPlayer';
 import SnackbarNotification from '../SnackbarNotification';
+import Fade from 'react-reveal/Fade';
 
 const styles = theme => ({
   card: {
@@ -61,34 +62,38 @@ class SongCard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.cover}
-          image={this.props.song.album.images[0].url}
-          title=""
-        />
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              {this.props.song.name}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {this.props.song.artists.map(artist => {
-                return artist.name + ' ';
-              })}
-            </Typography>
-          </CardContent>
-          <div className={classes.controls}>
-            <IconButton
-              onClick={() => this.handleAddToPlaylist(this.props.song)}
-              aria-label="Add To Playlist">
-              <AddIcon />
-            </IconButton>
-            <Player song={this.props.song.preview_url} />
-          </div>
-        </div>
+      <div>
+        <Fade right>
+          <Card id="slide" className={classes.card}>
+            <CardMedia
+              className={classes.cover}
+              image={this.props.song.album.images[0].url}
+              title=""
+            />
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  {this.props.song.name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {this.props.song.artists.map(artist => {
+                    return artist.name + ' ';
+                  })}
+                </Typography>
+              </CardContent>
+              <div className={classes.controls}>
+                <IconButton
+                  onClick={() => this.handleAddToPlaylist(this.props.song)}
+                  aria-label="Add To Playlist">
+                  <AddIcon />
+                </IconButton>
+                <Player song={this.props.song.preview_url} />
+              </div>
+            </div>
+          </Card>
+        </Fade>
         {this.state.open ? <SnackbarNotification open={this.state.open} /> : ''}
-      </Card>
+      </div>
     );
   }
 }

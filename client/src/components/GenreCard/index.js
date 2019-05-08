@@ -6,13 +6,21 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Fade from 'react-reveal/Fade';
 
 const styles = {
   card: {
-    minWidth: 275
+    backgroundColor: '#0091ea'
+  },
+  content: {
+    minWidth: 175,
+    minHeight: 175
   },
   title: {
-    fontSize: 30
+    fontSize: 30,
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 70
   },
   pos: {
     marginBottom: 12
@@ -27,18 +35,21 @@ class GenreCard extends React.Component {
     const { classes } = this.props;
     return (
       <Grid item xs={3}>
-        <Card className={classes.card}>
-          <CardActionArea onClick={this.handleClick}>
-            <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom>
-                {this.props.genre}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <Fade>
+          <Card className={classes.card}>
+            <CardActionArea onClick={this.handleClick}>
+              <CardContent className={classes.content}>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom>
+                  {this.props.genre.charAt(0).toUpperCase() +
+                    this.props.genre.slice(1)}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Fade>
       </Grid>
     );
   }

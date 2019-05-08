@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Player from '../SoundPlayer';
 import axios from 'axios';
+import Fade from 'react-reveal/Fade';
 
 const styles = theme => ({
   card: {
@@ -47,7 +48,6 @@ class ProfileSongCard extends React.Component {
         _id: this.props.song._id
       })
       .then(res => {
-        console.log(res);
         if ((res.data = 'success')) {
           window.location.reload();
         }
@@ -56,34 +56,39 @@ class ProfileSongCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props);
 
     return (
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.cover}
-          image={this.props.song.img}
-          title=""
-        />
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              {this.props.song.name}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {this.props.song.artists.map(artist => {
-                return artist.name + ' ';
-              })}
-            </Typography>
-          </CardContent>
-          <div className={classes.controls}>
-            <Player song={this.props.song.previewUrl} />
-            <IconButton onClick={this.handleDelete} aria-label="Remove Song">
-              <CloseIcon className={classes.closeIcon} />
-            </IconButton>
-          </div>
-        </div>
-      </Card>
+      <div>
+        <Fade right>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.cover}
+              image={this.props.song.img}
+              title=""
+            />
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  {this.props.song.name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {this.props.song.artists.map(artist => {
+                    return artist.name + ' ';
+                  })}
+                </Typography>
+              </CardContent>
+              <div className={classes.controls}>
+                <Player song={this.props.song.previewUrl} />
+                <IconButton
+                  onClick={this.handleDelete}
+                  aria-label="Remove Song">
+                  <CloseIcon className={classes.closeIcon} />
+                </IconButton>
+              </div>
+            </div>
+          </Card>
+        </Fade>
+      </div>
     );
   }
 }

@@ -14,6 +14,9 @@ import {
 } from '@material-ui/core';
 
 const styles = theme => ({
+  appBar: {
+    backgroundColor: '#01579b'
+  },
   root: {
     width: '100%'
   },
@@ -165,7 +168,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed">
+        <AppBar className={classes.appBar} position="fixed">
           <Toolbar>
             <Typography
               className={classes.title}

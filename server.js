@@ -8,6 +8,7 @@ const spotifyController = require('./controllers/spotify');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const spotifyRoutes = require('./routes/spotifyRoutes');
+const helmet = require('helmet');
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +25,7 @@ app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
+app.use(helmet());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

@@ -27,6 +27,15 @@ app.use(function(req, res, next) {
 });
 app.use(helmet());
 
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+    }
+  })
+);
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }

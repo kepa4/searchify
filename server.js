@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const spotifyRoutes = require('./routes/spotifyRoutes');
 const helmet = require('helmet');
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,6 +36,8 @@ app.use(
     }
   })
 );
+
+app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

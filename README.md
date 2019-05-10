@@ -1,10 +1,17 @@
-# Create React Express App
+# Searchiify
+An application for searching music by genre in spotify and filtering it so it only shows less popular songs (spotfiy's definition of popular) 
 
-## About This Boilerplate
+## About This App
+### Technologies 
+* Mongodb and mongoose
+* React library 
+* Material-ui
+* React-Reveal
+* Express
+* Spotify Web Api Node
+* Axios
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
 
 ## Starting the app locally
 

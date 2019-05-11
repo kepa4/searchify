@@ -3,14 +3,17 @@ An application for searching music by genre in spotify and filtering it so it on
 
 ## About This App
 ### Technologies 
-* Mongodb and mongoose
-* React library 
-* Material-ui
-* React-Reveal
-* Express
-* Spotify Web Api Node
-* Axios
+* [Mongodb](https://www.mongodb.com/) and [mongoose](https://mongoosejs.com/)
+* [React library](https://reactjs.org/)
+* [Material-ui](https://next.material-ui.com/)
+* [React-Reveal](https://www.react-reveal.com/)
+* [Express](https://expressjs.com/)
+* [Spotify Web Api Node](https://github.com/thelinmichael/spotify-web-api-node)
+* [Axios](https://github.com/axios/axios)
+* [Helmet](https://helmetjs.github.io/)
 
+### Preview
+ 
 
 
 ## Starting the app locally
@@ -30,7 +33,3 @@ npm start
 ```
 
 Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
-
-## Deployment (Heroku)
-
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.

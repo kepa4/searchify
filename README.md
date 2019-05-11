@@ -1,4 +1,4 @@
-# Searchiify
+# Searchify
 An application for searching music by genre in spotify and filtering it so it only shows less popular songs (spotfiy's definition of popular) 
 
 ## About This App

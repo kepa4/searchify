@@ -12,10 +12,6 @@ An application for searching music by genre in spotify and filtering it so it on
 * [Axios](https://github.com/axios/axios)
 * [Helmet](https://helmetjs.github.io/)
 
-### Preview
- 
-
-
 ## Starting the app locally
 
 Start by installing front and backend dependencies. While in this directory, run the following command:

@@ -28,15 +28,6 @@ app.use(function(req, res, next) {
 });
 app.use(helmet());
 
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
-    }
-  })
-);
-
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
 if (process.env.NODE_ENV === 'production') {

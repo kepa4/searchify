@@ -4,6 +4,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { NavLink } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -35,7 +36,10 @@ const styles = theme => ({
     cursor: 'pointer',
     '&:hover': {
       color: 'lightgrey'
-    }
+    },
+    color: 'white',
+    fontSize: 25,
+    textDecoration: 'none'
   },
   search: {
     position: 'relative',
@@ -108,9 +112,6 @@ class PrimarySearchAppBar extends React.Component {
     textFieldValue: ''
   };
 
-  handleClick = () => {
-    window.location = '/home';
-  };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -129,7 +130,6 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleProfilePage = () => {
-    this.handleMenuClose();
     window.location = '/profile';
   };
 
@@ -146,7 +146,11 @@ class PrimarySearchAppBar extends React.Component {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}>
-        <MenuItem onClick={this.handleProfilePage}>Profile</MenuItem>
+        <MenuItem>
+          <NavLink style={{ textDecoration: 'none' }} to="/profile">
+            Profile
+          </NavLink>
+        </MenuItem>
       </Menu>
     );
 
@@ -170,14 +174,13 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar className={classes.appBar} position="fixed">
           <Toolbar>
-            <Typography
+            <NavLink
               className={classes.title}
-              variant="h6"
+              to="/home"
               color="inherit"
-              onClick={this.handleClick}
               noWrap>
               Searchify
-            </Typography>
+            </NavLink>
             <div className={classes.header}>
               <Typography
                 className={classes.headerTitle}

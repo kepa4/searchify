@@ -7,6 +7,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Fade from 'react-reveal/Fade';
+import { NavLink } from 'react-router-dom';
 
 const styles = {
   card: {
@@ -28,26 +29,27 @@ const styles = {
 };
 
 class GenreCard extends React.Component {
-  handleClick = () => {
-    window.location = '/search?searchQuery=' + this.props.genre;
-  };
   render() {
     const { classes } = this.props;
     return (
       <Grid item xs={3}>
         <Fade>
           <Card className={classes.card}>
-            <CardActionArea onClick={this.handleClick}>
-              <CardContent className={classes.content}>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom>
-                  {this.props.genre.charAt(0).toUpperCase() +
-                    this.props.genre.slice(1)}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
+            <NavLink
+              to={'/search?searchQuery=' + this.props.genre}
+              style={{ textDecoration: 'none' }}>
+              <CardActionArea>
+                <CardContent className={classes.content}>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom>
+                    {this.props.genre.charAt(0).toUpperCase() +
+                      this.props.genre.slice(1)}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </NavLink>
           </Card>
         </Fade>
       </Grid>

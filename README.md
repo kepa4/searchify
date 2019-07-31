@@ -14,6 +14,8 @@ An application for searching music by genre in spotify and filtering it so it on
 
 ## Starting the app locally
 
+You will need to install MongoDB in order to use the app correctly(on your local machine)
+
 Start by installing front and backend dependencies. While in this directory, run the following command:
 
 ```
